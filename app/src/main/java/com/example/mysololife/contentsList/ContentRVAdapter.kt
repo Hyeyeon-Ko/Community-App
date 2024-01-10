@@ -12,12 +12,23 @@ import com.example.mysololife.R
 
 class ContentRVAdapter(val context : Context, val items : ArrayList<ContentModel>) : RecyclerView.Adapter<ContentRVAdapter.Viewholder>() {
 
+    // ItemClick 수동 생성
+    interface ItemClick {
+        fun onCLick(view : View, position: Int)
+    }
+    var itemClick : ItemClick? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentRVAdapter.Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.content_rv_item, parent, false)
         return Viewholder(v)
     }
 
     override fun onBindViewHolder(holder: ContentRVAdapter.Viewholder, position: Int) {
+        if (itemClick != null) {
+            holder.itemView.setOnClickListener {  v ->
+                itemClick?.onCLick(v, position)
+            }
+        }
         holder.bindItems(items[position])
     }
 

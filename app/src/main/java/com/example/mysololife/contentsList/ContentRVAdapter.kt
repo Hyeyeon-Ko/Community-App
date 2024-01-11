@@ -1,6 +1,7 @@
 package com.example.mysololife.contentsList
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,23 +13,12 @@ import com.example.mysololife.R
 
 class ContentRVAdapter(val context : Context, val items : ArrayList<ContentModel>) : RecyclerView.Adapter<ContentRVAdapter.Viewholder>() {
 
-    // ItemClick 수동 생성
-    interface ItemClick {
-        fun onCLick(view : View, position: Int)
-    }
-    var itemClick : ItemClick? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentRVAdapter.Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.content_rv_item, parent, false)
         return Viewholder(v)
     }
 
     override fun onBindViewHolder(holder: ContentRVAdapter.Viewholder, position: Int) {
-        if (itemClick != null) {
-            holder.itemView.setOnClickListener {  v ->
-                itemClick?.onCLick(v, position)
-            }
-        }
         holder.bindItems(items[position])
     }
 
@@ -39,6 +29,13 @@ class ContentRVAdapter(val context : Context, val items : ArrayList<ContentModel
     inner class Viewholder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(item : ContentModel) {
+
+            // 클릭 이벤트 처리
+            itemView.setOnClickListener {
+                val intent = Intent(context, ContentShowActivity::class.java)
+                intent.putExtra("url", item.webUrl)
+                itemView.context.startActivity(intent)
+            }
 
             // itemView == content_rv_item
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)

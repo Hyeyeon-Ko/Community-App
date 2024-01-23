@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mysololife.R
@@ -40,6 +41,11 @@ class ContentRVAdapter(val context : Context, val items : ArrayList<ContentModel
             // itemView == content_rv_item
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageViewArea = itemView.findViewById<ImageView>(R.id.imageArea)
+            val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
+
+            bookmarkArea.setOnClickListener {
+
+            }
 
             contentTitle.text = item.title
 
